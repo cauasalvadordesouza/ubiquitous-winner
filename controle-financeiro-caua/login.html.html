@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Caua | Login</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="card">
+    <h2>Caua</h2>
+
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="senha" placeholder="Senha" />
+
+    <button id="btnLogin">Entrar</button>
+    <button id="btnCadastro">Cadastrar</button>
+
+    <p id="msg"></p>
+  </div>
+
+  <script type="module">
+    import { cadastrar, entrar, observarAuth } from "./js/auth.js";
+
+    const email = document.getElementById("email");
+    const senha = document.getElementById("senha");
+    const msg = document.getElementById("msg");
+
+    document.getElementById("btnCadastro").onclick = async () => {
+      try {
+        await cadastrar(email.value, senha.value);
+      } catch (e) {
+        msg.innerText = e.message;
+      }
+    };
+
+    document.getElementById("btnLogin").onclick = async () => {
+      try {
+        await entrar(email.value, senha.value);
+      } catch (e) {
+        msg.innerText = e.message;
+      }
+    };
+
+    observarAuth(user => {
+      if (user) {
+        window.location.href = "dashboard.html";
+      }
+    });
+  </script>
+
+</body>
+</html>
